@@ -92,13 +92,13 @@ public class Enemy : MonoBehaviour
     }
 
 
-    // ´Ù¸¥ ½ºÅ©¸³Æ®°¡ Àû¿¡°Ô µ¥¹ÌÁö¸¦ ÁÙ ¶§ È£ÃâÇÏ´Â ÇÔ¼ö
+    // ï¿½Ù¸ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void TakeDamage(float amount)
     {
         EnemyHelth -= amount;
         hpSlider.value = (float)currentHp / maxHP;
 
-        // ¸¸¾à ÀûÀÇ Ã¼·ÂÀÌ 0 ÀÌÇÏ°¡ µÇ¸é, Àû ¿ÀºêÁ§Æ®¸¦ ÆÄ±«ÇÕ´Ï´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ç¸ï¿½, ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ä±ï¿½ï¿½Õ´Ï´ï¿½.
         if (EnemyHelth <= 0)
         {
             Destroy(gameObject);
@@ -110,14 +110,6 @@ public class Enemy : MonoBehaviour
         Vector3 dir = (player.position - transform.position).normalized;
         transform.position += dir * -moveSpeed * Time.deltaTime;
         transform.LookAt(player.position);
-    }
-    public void TakeDamage(int damage)
-    {
-        currentHp -= damage;
-        if (currentHp <= 0)
-        {
-            Die();
-        }
     }
 
     void Die()

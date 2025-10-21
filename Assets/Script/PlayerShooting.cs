@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public GameObject projectilePrefab;
+     public GameObject projectilePrefab;
     public GameObject projectilePrefab2;
 
     public Transform firePoint;
@@ -12,11 +12,7 @@ public class PlayerShooting : MonoBehaviour
 
     int currentWeapon = 0;
 
-    // ±ÙÁ¢ ¹«±â º¯¼ö Ãß°¡
-    [SerializeField]
-    private GameObject meleeWeaponObject;
-
-    private float swingDuration = 0.5f;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -43,49 +39,43 @@ public class PlayerShooting : MonoBehaviour
         currentWeapon = 1 - currentWeapon;
     }
 
+    //void Shoot()
+    //  {
+    //      Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+    //      Vector3 targetPoint;
+    //      targetPoint = ray.GetPoint(50f);
+    //     Vector3 direction = (targetPoint - firePoint.position).normalized;
+    //
+    //      GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
+    //  }
+
     void Shoot()
     {
-        // ÇöÀç ¹«±â¿¡ µû¶ó ¼Óµµ ¼³Á¤
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Vector3 targetPoint;
+        targetPoint = ray.GetPoint(50f);
+        Vector3 direction = (targetPoint - firePoint.position).normalized;
+        
+        // í˜„ì¬ ë¬´ê¸°ì— ë”°ë¼ ì†ë„ ì„¤ì •
         if (currentWeapon == 1)
         {
-            // ... ±âÁ¸ ÄÚµå
-            GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+            // ... ê¸°ì¡´ ì½”ë“œ
+            GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
 
-            // Projectile ½ºÅ©¸³Æ® °¡Á®¿À±â
+            // Projectile ìŠ¤í¬ë¦½íŠ¸ ê°€ì ¸ì˜¤ê¸°
             Projectile projectileScript = proj.GetComponent<Projectile>();
 
-            projectileScript.speed = 10f; // Ã¹ ¹øÂ° ¹«±â ¼Óµµ
+            projectileScript.speed = 10f; // ì²« ë²ˆì§¸ ë¬´ê¸° ì†ë„
         }
         else
         {
-            if (meleeWeaponObject != null)
-            {
-                // ±ÙÁ¢ ¹«±â ·ÎÁ÷
-                meleeWeaponObject.SetActive(true);
-                StartCoroutine(SwingWeaponForDuration(swingDuration));
-            }
-            else
-            {
-                Debug.LogError("Melee Weapon Object°¡ Inspector¿¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
-            }
-            // ... ±âÁ¸ ÄÚµå
-            // GameObject proj = Instantiate(projectilePrefab2, firePoint.position, Quaternion.identity);
+            // ... ê¸°ì¡´ ì½”ë“œ
+            GameObject proj = Instantiate(projectilePrefab2, firePoint.position, Quaternion.LookRotation(direction));
 
-            // Projectile ½ºÅ©¸³Æ® °¡Á®¿À±â
-            //  Projectile projectileScript = proj.GetComponent<Projectile>();
-            // projectileScript.speed = 20f; // µÎ ¹øÂ° ¹«±â ¼Óµµ
+            // Projectile ìŠ¤í¬ë¦½íŠ¸ ê°€ì ¸ì˜¤ê¸°
+            Projectile projectileScript = proj.GetComponent<Projectile>();
+            projectileScript.speed = 20f; // ë‘ ë²ˆì§¸ ë¬´ê¸° ì†ë„
         }
 
-    }
-    IEnumerator SwingWeaponForDuration(float duration)
-    {
-        // ¼³Á¤µÈ ½Ã°£(duration)¸¸Å­ ´ë±âÇÕ´Ï´Ù.
-        yield return new WaitForSeconds(duration);
-
-        // ´ë±â°¡ ³¡³ª¸é ¹«±â ¿ÀºêÁ§Æ®¸¦ ´Ù½Ã ºñÈ°¼ºÈ­ÇÏ¿© ¼û±é´Ï´Ù.
-        if (meleeWeaponObject != null)
-        {
-            meleeWeaponObject.SetActive(false);
-        }
     }
 }
