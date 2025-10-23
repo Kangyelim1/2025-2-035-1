@@ -25,8 +25,9 @@ public class ExperienceGem : MonoBehaviour
     {
         if (player == null) return;
 
-        // 플레이어와의 거리가 pickupDistance 이하면 플레이어에게 이동
         float distance = Vector3.Distance(transform.position, player.position);
+
+        // 거리가 pickupDistance 이하면 플레이어에게 이동 시작
         if (distance <= pickupDistance)
         {
             MoveToPlayer();
@@ -35,25 +36,26 @@ public class ExperienceGem : MonoBehaviour
 
     void MoveToPlayer()
     {
+        // 플레이어를 향하는 방향 벡터 계산
         Vector3 direction = (player.position - transform.position).normalized;
+
+        // 플레이어 방향으로 정상 이동 (중복된 함수 정의를 제거했습니다.)
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
-    // 플레이어와 충돌(트리거) 시 경험치 제공
+    // OnTriggerEnter 함수는 image_7f2349.png 와 같이 올바르게 작성되어 있습니다.
     private void OnTriggerEnter(Collider other)
     {
-        // 3D 환경을 가정했습니다. 2D라면 OnTriggerEnter2D를 사용하세요.
         if (other.CompareTag("Player"))
         {
             PlayerStats playerStats = other.GetComponent<PlayerStats>();
 
             if (playerStats != null)
             {
-                // 경험치 획득 및 아이템 파괴
                 playerStats.GainExperience(expValue);
                 Destroy(gameObject);
             }
         }
     }
-    
+
 }

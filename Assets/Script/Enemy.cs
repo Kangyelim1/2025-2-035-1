@@ -35,14 +35,24 @@ public class Enemy : MonoBehaviour
 
     public Slider hpSlider;
 
+
+    //경험치
+    public GameObject experienceGemPrefab; // 경험치 아이템 Prefab을 Inspector에서 연결
+    public float experienceValue = 10f;  // 이 적이 드롭할 경험치 양
+
+    public GameObject projectile;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         IastAttackTime = -attackCooldown;
+        //경험치
+        EnemyHelth = maxHP;
         currentHp = maxHP;
         rb = GetComponent<Rigidbody2D>();
         hpSlider.value = 1f;
+
     }
 
     // Update is called once per frame
@@ -98,10 +108,18 @@ public class Enemy : MonoBehaviour
         EnemyHelth -= amount;
         hpSlider.value = (float)currentHp / maxHP;
 
+        //경험치
+        hpSlider.value = EnemyHelth / maxHP;
+
         // ���� ���� ü���� 0 ���ϰ� �Ǹ�, �� ������Ʈ�� �ı��մϴ�.
         if (EnemyHelth <= 0)
         {
             Destroy(gameObject);
+        }
+
+        if (EnemyHelth <= 0)
+        {
+            Die(); // ⬅️ 체력이 0이 되면 반드시 Die()를 호출해야 합니다.
         }
     }
     void RunAway()
@@ -114,6 +132,17 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        // 경험치 아이템 드롭 로직
+        if (experienceGemPrefab != null)
+        {
+            GameObject gem = Instantiate(experienceGemPrefab, transform.position, Quaternion.identity);
+            ExperienceGem gemScript = gem.GetComponent<ExperienceGem>();
+            if (gemScript != null)
+            {
+                gemScript.expValue = experienceValue;
+            }
+        }
+
         Destroy(gameObject);
     }
 

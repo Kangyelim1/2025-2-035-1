@@ -280,6 +280,9 @@ MonoBehaviour:
   firePoint: {fileID: 1475713487538665996}
   maxHP: 5
   hpSlider: {fileID: 8307125716801083645}
+  experienceGemPrefab: {fileID: 9059425148255118187, guid: c947dc2fc43449541a3a5b7708210f0a, type: 3}
+  experienceValue: 10
+  projectile: {fileID: 3909369434768556212, guid: ab60b2e38314e9d4bb4f13d61e3b0149, type: 3}
 --- !u!54 &1891670444129480856
 Rigidbody:
   m_ObjectHideFlags: 0
