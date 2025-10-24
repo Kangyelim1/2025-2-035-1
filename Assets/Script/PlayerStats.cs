@@ -23,14 +23,12 @@ public class PlayerStats : MonoBehaviour
     // 경험치 획득 함수 (이 함수가 스크립트에 딱 하나만 있어야 합니다!)
     public void GainExperience(float expAmount)
     {
+        // Debug.Log("경험치 획득: " + expAmount + ". 현재 경험치: " + currentExp);
         currentExp += expAmount;
-        Debug.Log("경험치 획득: " + expAmount + ". 현재 경험치: " + currentExp);
-
         CheckLevelUp();
 
-        // 함수 호출 시 괄호 ()는 필수입니다.
         UpdateExpUI();
-        UpdateLevelText(); // ⭐ 괄호 ()가 추가되어 오류를 해결했습니다.
+        UpdateLevelText(); // ⭐ 괄호 () 추가 (오류 해결)
     }
 
     private void CheckLevelUp()

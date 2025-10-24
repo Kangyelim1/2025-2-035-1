@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +10,9 @@ public class Projectile : MonoBehaviour
 
     public float Damge;
 
-    public float damage = 1f; // Åõ»çÃ¼°¡ ÁÙ ÇÇÇØ·®
+    public float damage = 1f; // íˆ¬ì‚¬ì²´ê°€ ì¤„ í”¼í•´ëŸ‰
+
+    public GameObject experienceGemPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -26,26 +28,37 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®°¡ "Enemy" ÅÂ±×¸¦ °¡Áö°í ÀÖ´ÂÁö È®ÀÎ
+        float damageAmount = 1f;
+
+        // ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ê°€ "Enemy" íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸
         if (other.CompareTag("Enemy"))
         {
-            // 1. Ãæµ¹ÇÑ Àû ¿ÀºêÁ§Æ®¿¡¼­ Enemy ½ºÅ©¸³Æ®¸¦ °¡Á®¿É´Ï´Ù.
+            // 1. ì¶©ëŒí•œ ì  ì˜¤ë¸Œì íŠ¸ì—ì„œ Enemy ìŠ¤í¬ë¦½íŠ¸ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
             Enemy enemyScript = other.GetComponent<Enemy>();
 
             if (enemyScript != null)
             {
-                // 2. ÀûÀÇ TakeDamage ÇÔ¼ö¸¦ È£ÃâÇÏ¿© ÇÇÇØ¸¦ ÀÔÈü´Ï´Ù.
-                // ÀÌ ÇÔ¼ö´Â ÀûÀÇ Ã¼·ÂÀ» °¨¼Ò½ÃÅ°°í, Ã¼·ÂÀÌ 0ÀÌ µÇ¸é Die()¸¦ È£ÃâÇÕ´Ï´Ù.
+                // 2. ì ì˜ TakeDamage í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ì—¬ í”¼í•´ë¥¼ ì…í™ë‹ˆë‹¤.
+                // ì´ í•¨ìˆ˜ëŠ” ì ì˜ ì²´ë ¥ì„ ê°ì†Œì‹œí‚¤ê³ , ì²´ë ¥ì´ 0ì´ ë˜ë©´ Die()ë¥¼ í˜¸ì¶œí•©ë‹ˆë‹¤.
                 enemyScript.TakeDamage(damage);
             }
 
-            // 3. Åõ»çÃ¼(ÀÚ½Å)¸¦ ÆÄ±«ÇÕ´Ï´Ù.
+            // 3. íˆ¬ì‚¬ì²´(ìì‹ )ë¥¼ íŒŒê´´í•©ë‹ˆë‹¤.
             Destroy(gameObject);
         }
-        // Enemy ÅÂ±×°¡ ¾Æ´ÏÁö¸¸ ÆÄ±«µÇ¾î¾ß ÇÏ´Â ´Ù¸¥ ¿ÀºêÁ§Æ®(¿¹: º®) Ã³¸®
+        else if (other.CompareTag("Gate"))
+        {
+            TreeDestroyer treeScript = other.GetComponent<TreeDestroyer>();
+            if (treeScript != null)
+            {
+                treeScript.TakeDamage(damageAmount); // ë‚˜ë¬´ì˜ TakeDamage í˜¸ì¶œ (ì”¬ ì „í™˜ ìœ ë„)
+            }
+            Destroy(gameObject); // íˆ¬ì‚¬ì²´ íŒŒê´´
+        }
+        // Enemy íƒœê·¸ê°€ ì•„ë‹ˆì§€ë§Œ íŒŒê´´ë˜ì–´ì•¼ í•˜ëŠ” ë‹¤ë¥¸ ì˜¤ë¸Œì íŠ¸(ì˜ˆ: ë²½) ì²˜ë¦¬
         else if (!other.CompareTag("Player"))
         {
-            // ÇÃ·¹ÀÌ¾î¿Í Ãæµ¹ÇÑ °ÍÀÌ ¾Æ´Ï¶ó¸é Åõ»çÃ¼ ÆÄ±« (ÇÊ¿ä¿¡ µû¶ó ·ÎÁ÷ ¼öÁ¤ °¡´É)
+            // í”Œë ˆì´ì–´ì™€ ì¶©ëŒí•œ ê²ƒì´ ì•„ë‹ˆë¼ë©´ íˆ¬ì‚¬ì²´ íŒŒê´´ (í•„ìš”ì— ë”°ë¼ ë¡œì§ ìˆ˜ì • ê°€ëŠ¥)
             Destroy(gameObject);
         }
 
