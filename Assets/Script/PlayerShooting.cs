@@ -12,12 +12,14 @@ public class PlayerShooting : MonoBehaviour
 
     int currentWeapon = 0;
 
-    
+    private PlayerStats playerStats; // PlayerStats 변수 선언
 
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
+        // PlayerStats 컴포넌트를 찾습니다.
+        playerStats = FindObjectOfType<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -39,23 +41,13 @@ public class PlayerShooting : MonoBehaviour
         currentWeapon = 1 - currentWeapon;
     }
 
-    //void Shoot()
-    //  {
-    //      Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-    //      Vector3 targetPoint;
-    //      targetPoint = ray.GetPoint(50f);
-    //     Vector3 direction = (targetPoint - firePoint.position).normalized;
-    //
-    //      GameObject proj = Instantiate(projectilePrefab, firePoint.position, Quaternion.LookRotation(direction));
-    //  }
-
     void Shoot()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         Vector3 targetPoint;
         targetPoint = ray.GetPoint(50f);
         Vector3 direction = (targetPoint - firePoint.position).normalized;
-        
+
         // 현재 무기에 따라 속도 설정
         if (currentWeapon == 1)
         {
@@ -76,6 +68,7 @@ public class PlayerShooting : MonoBehaviour
             Projectile projectileScript = proj.GetComponent<Projectile>();
             projectileScript.speed = 20f; // 두 번째 무기 속도
         }
+
 
     }
 }

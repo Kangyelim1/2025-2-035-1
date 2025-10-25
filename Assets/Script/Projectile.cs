@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
 
     public GameObject experienceGemPrefab;
 
+    private float damageAmount = 1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,39 +30,38 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        float damageAmount = 1f;
-
         // 충돌한 오브젝트가 "Enemy" 태그를 가지고 있는지 확인
         if (other.CompareTag("Enemy"))
         {
-            // 1. 충돌한 적 오브젝트에서 Enemy 스크립트를 가져옵니다.
-            Enemy enemyScript = other.GetComponent<Enemy>();
-
-            if (enemyScript != null)
+            // 1. 적(Enemy) 처리
+            if (other.CompareTag("Enemy"))
             {
-                // 2. 적의 TakeDamage 함수를 호출하여 피해를 입힙니다.
-                // 이 함수는 적의 체력을 감소시키고, 체력이 0이 되면 Die()를 호출합니다.
-                enemyScript.TakeDamage(damage);
+                Enemy enemyScript = other.GetComponent<Enemy>();
+                if (enemyScript != null)
+                {
+                    enemyScript.TakeDamage(damageAmount); // 적의 TakeDamage 호출 (경험치 드롭 유도)
+                }
+                Destroy(gameObject); // 투사체 파괴
+            }
+            else if (other.CompareTag("Gate")) // ⭐ Gate 태그를 가진 오브젝트와 충돌
+            {
+                StageGate gateScript = other.GetComponent<StageGate>();
+                if (gateScript != null)
+                {
+                    gateScript.TakeDamage(damageAmount); // Gate에게 피해 입히기
+                }
+                Destroy(gameObject); // 투사체 파괴
             }
 
-            // 3. 투사체(자신)를 파괴합니다.
-            Destroy(gameObject);
-        }
-        else if (other.CompareTag("Gate"))
-        {
-            TreeDestroyer treeScript = other.GetComponent<TreeDestroyer>();
-            if (treeScript != null)
+            // Enemy 태그가 아니지만 파괴되어야 하는 다른 오브젝트(예: 벽) 처리
+            else if (!other.CompareTag("Player"))
             {
-                treeScript.TakeDamage(damageAmount); // 나무의 TakeDamage 호출 (씬 전환 유도)
+                // 플레이어와 충돌한 것이 아니라면 투사체 파괴 (필요에 따라 로직 수정 가능)
+                Destroy(gameObject);
             }
-            Destroy(gameObject); // 투사체 파괴
-        }
-        // Enemy 태그가 아니지만 파괴되어야 하는 다른 오브젝트(예: 벽) 처리
-        else if (!other.CompareTag("Player"))
-        {
-            // 플레이어와 충돌한 것이 아니라면 투사체 파괴 (필요에 따라 로직 수정 가능)
-            Destroy(gameObject);
-        }
 
+        }
     }
+
+
 }

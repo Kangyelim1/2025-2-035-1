@@ -36,10 +36,8 @@ public class ExperienceGem : MonoBehaviour
 
     void MoveToPlayer()
     {
-        // 플레이어를 향하는 방향 벡터 계산
+        // 플레이어를 향하는 방향 벡터 계산 및 이동 로직
         Vector3 direction = (player.position - transform.position).normalized;
-
-        // 플레이어 방향으로 정상 이동 (중복된 함수 정의를 제거했습니다.)
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 

@@ -8,9 +8,8 @@ public class PlayerStats : MonoBehaviour
     public int currentLevel = 1;
     public float currentExp = 0f;
     public float expToNextLevel = 100f;
-
-    public Slider expSlider; // Inspector에서 경험치 바 Slider 연결
-    public Text levelText;   // (선택 사항) 레벨을 표시할 Text UI
+    public Slider expSlider;
+    public Text levelText;
 
 
     void Start()
@@ -20,15 +19,16 @@ public class PlayerStats : MonoBehaviour
         UpdateLevelText();
     }
 
-    // 경험치 획득 함수 (이 함수가 스크립트에 딱 하나만 있어야 합니다!)
     public void GainExperience(float expAmount)
     {
-        // Debug.Log("경험치 획득: " + expAmount + ". 현재 경험치: " + currentExp);
         currentExp += expAmount;
-        CheckLevelUp();
+        Debug.Log("경험치 획득: " + expAmount + " . 현재 경험치: " + currentExp); // Line 18
 
-        UpdateExpUI();
-        UpdateLevelText(); // ⭐ 괄호 () 추가 (오류 해결)
+        CheckLevelUp(); // 레벨업 체크
+
+        // // UI 업데이트 호출 시 반드시 괄호 ()를 붙여야 합니다.
+        UpdateExpUI();   // ⭐ 수정! 괄호 () 추가
+        UpdateLevelText(); // ⭐ 수정! 괄호 () 추가
     }
 
     private void CheckLevelUp()
