@@ -104,9 +104,9 @@ public class Enemy : MonoBehaviour
     {
         EnemyHelth -= amount;
 
-        if (EnemyHelth <= 0)
+        if (currentHealth <= 0)
         {
-            Die();
+            Die(); // 체력이 0이 되면 사망 처리
         }
     }
     void RunAway()

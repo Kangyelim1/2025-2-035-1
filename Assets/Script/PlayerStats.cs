@@ -7,22 +7,24 @@ public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance { get; private set; }
 
-    public int currentLevel = 1;
+    public float currentLevel = 1f;
+
     public float currentExp = 0f;
     public float expToNextLevel = 100f;
     public Slider expSlider;
     public Text levelText;
 
-    private void Awake() // Start 전에 호출
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // 중복 인스턴스 파괴
         }
         else
         {
-            Instance = this;
-            // DontDestroyOnLoad(gameObject); // 씬 전환 시에도 유지하려면 추가
+            Instance = this; // 인스턴스 설정
+            // 씬 전환 시에도 플레이어 스탯을 유지하려면 아래 주석을 해제합니다.
+            // DontDestroyOnLoad(gameObject);
         }
     }
 
