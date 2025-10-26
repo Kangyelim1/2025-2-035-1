@@ -35,6 +35,9 @@ public class Enemy : MonoBehaviour
 
     public Slider hpSlider;
 
+    private float currentHealth; // 체력 변수가 maxHP로 초기화된 곳
+
+    public float experienceAmount = 10f; // 이 적을 처치하면 얻는 경험치 양
 
     //경험치
     public GameObject experienceGemPrefab; // 경험치 아이템 Prefab을 Inspector에서 연결
@@ -95,31 +98,15 @@ public class Enemy : MonoBehaviour
 
                 RunAway();
                 break;
-
-
-
         }
     }
-
-
-    // �ٸ� ��ũ��Ʈ�� ������ �������� �� �� ȣ���ϴ� �Լ�
     public void TakeDamage(float amount)
     {
         EnemyHelth -= amount;
-        hpSlider.value = (float)currentHp / maxHP;
-
-        //경험치
-        hpSlider.value = EnemyHelth / maxHP;
-
-        // ���� ���� ü���� 0 ���ϰ� �Ǹ�, �� ������Ʈ�� �ı��մϴ�.
-        if (EnemyHelth <= 0)
-        {
-            Destroy(gameObject);
-        }
 
         if (EnemyHelth <= 0)
         {
-            Die(); // ⬅️ 체력이 0이 되면 반드시 Die()를 호출해야 합니다.
+            Die();
         }
     }
     void RunAway()
@@ -132,17 +119,14 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
-        // 경험치 아이템 드롭 로직
-        if (experienceGemPrefab != null)
+        // 1. 경험치 부여
+        // PlayerStats.Instance가 null인지 확인하는 것이 안전합니다.
+        if (PlayerStats.Instance != null)
         {
-            GameObject gem = Instantiate(experienceGemPrefab, transform.position, Quaternion.identity);
-            ExperienceGem gemScript = gem.GetComponent<ExperienceGem>();
-            if (gemScript != null)
-            {
-                gemScript.expValue = experienceValue;
-            }
+            PlayerStats.Instance.GainExperience(experienceAmount); // ✨ 경험치 전달
         }
 
+        // 2. 적 파괴
         Destroy(gameObject);
     }
 

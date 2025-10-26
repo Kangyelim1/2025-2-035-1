@@ -6956,7 +6956,7 @@ PrefabInstance:
       addedObject: {fileID: 1688702788}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ac0ead4fea6d14aa95960ffc818904, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1688702791}
+      addedObject: {fileID: 1688702793}
   m_SourcePrefab: {fileID: 100100000, guid: 64ac0ead4fea6d14aa95960ffc818904, type: 3}
 --- !u!1 &1583924995
 GameObject:
@@ -7727,10 +7727,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98413393d7cb6714882772d4f2ce69de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Level 2
+  nextSceneName: level_ 2
   gateHealth: 5
---- !u!65 &1688702791
-BoxCollider:
+--- !u!136 &1688702793
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -7747,9 +7747,11 @@ BoxCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.1, y: 7.67, z: 4.33}
-  m_Center: {x: 0, y: 3.96, z: 0}
+  serializedVersion: 2
+  m_Radius: 2.42
+  m_Height: 16.77
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1716325746
 PrefabInstance:
   m_ObjectHideFlags: 0

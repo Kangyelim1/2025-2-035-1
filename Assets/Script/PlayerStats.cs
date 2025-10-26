@@ -5,12 +5,26 @@ using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static PlayerStats Instance { get; private set; }
+
     public int currentLevel = 1;
     public float currentExp = 0f;
     public float expToNextLevel = 100f;
     public Slider expSlider;
     public Text levelText;
 
+    private void Awake() // Start 전에 호출
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            // DontDestroyOnLoad(gameObject); // 씬 전환 시에도 유지하려면 추가
+        }
+    }
 
     void Start()
     {
