@@ -37,6 +37,13 @@ public class Projectile : MonoBehaviour
             if (other.CompareTag("Enemy"))
             {
                 Enemy enemyScript = other.GetComponent<Enemy>();
+                suspiciousHp hp = other.GetComponent<suspiciousHp>();
+
+                if (hp != null)
+                {
+                    hp.TakeDamage(damageAmount);
+
+                }
                 if (enemyScript != null)
                 { 
                     enemyScript.TakeDamage(damageAmount); // 적의 TakeDamage 호출 (경험치 드롭 등)
@@ -45,16 +52,7 @@ public class Projectile : MonoBehaviour
                     Destroy(gameObject); // 투사체 파괴
                 }
             }
-            else if (other.CompareTag("Gate"))
-            {
-                StageGate gateScript = other.GetComponent<StageGate>();
-                if (gateScript != null)
-                {
-                    gateScript.TakeDamage(damageAmount); // Gate에게 피해 입히기
-                    Destroy(gameObject); // 투사체 파괴
-                }
-            }
-
+          
             // Enemy 태그가 아니지만 파괴되어야 하는 다른 오브젝트(예: 벽) 처리
             else if (!other.CompareTag("Player"))
             {

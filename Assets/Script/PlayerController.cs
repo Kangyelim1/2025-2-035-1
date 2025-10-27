@@ -117,4 +117,18 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<StageGate>() != null)
+        {
+            string info = other.GetComponent<StageGate>().objectInfo;
+            if (info.StartsWith("Scene"))
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(info);
+            }
+        }
+;
+
+    }
 }
