@@ -70,6 +70,8 @@ MonoBehaviour:
   speed: 28
   lifeTime: 2
   Damge: 0
+  damage: 1
+  experienceGemPrefab: {fileID: 0}
 --- !u!1001 &4323494074157303157
 PrefabInstance:
   m_ObjectHideFlags: 0

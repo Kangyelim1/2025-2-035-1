@@ -33,11 +33,11 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    public Slider hpSlider;
-
     private float currentHealth; // 체력 변수가 maxHP로 초기화된 곳
 
     public float experienceAmount = 10f; // 이 적을 처치하면 얻는 경험치 양
+
+    public Slider hpSlider;
 
     //경험치
     public GameObject experienceGemPrefab; // 경험치 아이템 Prefab을 Inspector에서 연결
@@ -100,6 +100,8 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+
+    
     public void TakeDamage(float amount)
     {
         EnemyHelth -= amount;
